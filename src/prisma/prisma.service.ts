@@ -13,4 +13,10 @@ export class PrismaService extends PrismaClient {
       },
     });
   }
+
+  cleanDatabase() {
+    // mối quan hệ 1 - n , xóa nhiều trước rồi xóa 1
+    // transaction 1 trong 2 lệnh bị lỗi thì rollback
+    return this.$transaction([this.note.deleteMany(), this.user.deleteMany()]);
+  }
 }

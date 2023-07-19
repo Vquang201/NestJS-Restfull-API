@@ -11,9 +11,25 @@ services:
       POSTGRES_DB: testdb
     networks:
       - nestjs-network
+  #tạo service để TEST
+  test-database:
+    image: postgres:15.0
+    container_name: test-database
+    ports:
+      - 5435:5432 #{port in host(myPC)} : {port in Container}
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Abc123456789
+      POSTGRES_DB: testdb
+    networks:
+      - nestjs-network
+
+
 networks:
   nestjs-network:
-# docker compose up -d =>> create
+
+
+# docker compose up -d =>> create container
 # docker compose down =>> remove
 # docker compose up -d dev-database -d
 

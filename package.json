@@ -7,9 +7,17 @@
   "license": "UNLICENSED",
   "scripts": {
     "start:dev": "nodemon --watch src --ext ts",
+
+    "prisma:dev:deploy" : "prisma migrate deploy",
     "db:dev:remove": "docker compose rm dev-database --stop --force --volumes",
     "db:dev:create": "docker compose up dev-database --detach",
-    "da:dev:restart": "npm db:dev:remove && npm db:dev:create",
+    "db:dev:restart": "npm run db:dev:remove && npm run db:dev:create && timeout /t 2 && npm run prisma:dev:deploy",
+    
+    "prisma:test:deploy" : "dotenv -e .env.test -- prisma migrate deploy",
+    "db:test:remove": "docker compose rm test-database --stop --force --volumes",
+    "db:test:create": "docker compose up test-database --detach",
+    "db:test:restart": "npm run db:test:remove && npm run db:test:create && timeout /t 2 && npm run prisma:test:deploy",
+    "pretest:e2e": "npm run db:test:restart",
     "test:e2e": "jest --watch --no-cache --config ./test/jest-e2e.json",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -33,6 +41,8 @@
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "dotenv": "^16.3.1",
+    "dotenv-cli": "^7.2.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "prisma": "^4.16.2",
