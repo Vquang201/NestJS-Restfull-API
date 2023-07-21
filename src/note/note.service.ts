@@ -10,12 +10,16 @@ export class NoteService {
     const notes = await this.prismaService.note.findMany({
       where: { userId: uid },
     });
+
+    return notes;
   }
 
   async getNoteById(uid: number) {
-    const note = await this.prismaService.note.findUnique({
+    const note = await this.prismaService.note.findFirst({
       where: { id: uid },
     });
+
+    return note;
   }
 
   async insertNote(uid: number, body: InsertNoteDTO) {
@@ -40,10 +44,12 @@ export class NoteService {
       throw new ForbiddenException('Cannot find Note to delete');
     }
 
-    return await this.prismaService.note.update({
+    await this.prismaService.note.update({
       where: { id: nid },
       data: { ...body },
     });
+
+    return { mess: 'UPDATE SUCCESSFULLY' };
   }
 
   async deleteNoteById(nid: number) {
@@ -57,10 +63,12 @@ export class NoteService {
       throw new ForbiddenException('Cannot find Note to delete');
     }
 
-    return await this.prismaService.note.delete({
+    await this.prismaService.note.delete({
       where: {
         id: nid,
       },
     });
+
+    return { mess: 'DELETE SUCCESSFULLY' };
   }
 }

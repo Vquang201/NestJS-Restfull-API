@@ -24,17 +24,18 @@ export class NoteController {
     return this.noteService.getNotes(uid);
   }
 
-  @Get(':id')
-  getNoteById(@Param('id') uid: number) {
+  //ParseIntPipe convert param sang number
+  @Get('/:id')
+  getNoteById(@Param('id', ParseIntPipe) uid: number) {
     return this.noteService.getNoteById(uid);
   }
 
-  @Post()
+  @Post('/create-note')
   insertNote(@GetUser('id') uid: number, @Body() body: InsertNoteDTO) {
     return this.noteService.insertNote(uid, body);
   }
 
-  @Patch()
+  @Patch('/update-note/:id')
   updateNoteById(
     @Param('id', ParseIntPipe) nid: number,
     @Body() body: UpdateNoteDTO,
@@ -42,7 +43,7 @@ export class NoteController {
     return this.noteService.updateNoteById(nid, body);
   }
 
-  @Delete('')
+  @Delete('/delete-note/:id')
   deleteNoteById(@Param('id', ParseIntPipe) nid: number) {
     return this.noteService.deleteNoteById(nid);
   }
