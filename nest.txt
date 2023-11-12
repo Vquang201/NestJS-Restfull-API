@@ -1,0 +1,15 @@
+dto : data transfer object
+npx prisma studio 
+=> Mở web thao tác với Db
+nest g module nameModule
+=> Tạo module mới
+nest g service nameService
+=> Tạo service mới
+npx prisma migrate dev
+=> cập nhập sự thay đổi ở trong prisma
+npm test:e2e
+=> thực hiện test EndToEnd
+
+docker composr rm dev-database --stop --force --volumes
+=> remove container+volumes
+
